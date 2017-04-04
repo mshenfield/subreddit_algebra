@@ -1,0 +1,13 @@
+[[source]]
+verify_ssl = true
+url = "https://pypi.python.org/simple"
+
+[dev-packages]
+ipython = "*"
+ipdb = "*"
+
+[packages]
+sklearn = "*"
+numpy = "*"
+scipy = "*"
+pandas = "*"
