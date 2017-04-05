@@ -2,6 +2,7 @@
 Index subreddit vectors in a Ball Tree to support efficient K-Nearest-Neighbors search.
 When called as __main__, this saves the built index into the 'search_index.pkl'.
 """
+import marisa_trie
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import BallTree
@@ -83,6 +84,12 @@ def index_data(df, ndarr):
     return tree
 
 
+def index_subreddit_names(df):
+    """Return a trie of all subreddit names we have data for"""
+    names = marisa_trie.Trie(df.index.values.tolist())
+    return names
+
+
 if __name__ == '__main__':
     import os
     import pickle
@@ -100,6 +107,8 @@ if __name__ == '__main__':
     ndarr = pmi(df)
     # Index the data
     tree = index_data(df, ndarr)
+    # Build a trie of the subreddit names for completions
+    names = index_subreddit_names(df)
 
     if not os.path.isdir(constants.OUTPUT_HOME):
         os.mkdir(constants.OUTPUT_HOME)
@@ -111,6 +120,7 @@ if __name__ == '__main__':
         (constants.DF_FILE, df),
         (constants.PMI_FILE, ndarr),
         (constants.INDEX_FILE, tree),
+        (constants.NAMES_FILE, names),
     )
     for filepath, obj in to_pickle:
         with open(filepath, 'wb') as f:

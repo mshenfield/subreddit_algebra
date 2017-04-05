@@ -30,12 +30,19 @@ def initialize_subreddit_algebra(df=None, pmi_arr=None, index=None):
         return pmi_arr[ix]
 
     def subreddit_algebra(name_1, op, name_2, limit=5):
-        """Apply the operator (+/-) to the vectors in t2_overlaps for each subreddit_name
+        """Apply the operator (plus/minus) to the vectors in t2_overlaps for each subreddit_name
 
         Return the subreddit_names of the limit closest subreddits to the result.
         """
+        if op not in constants.OPERATORS:
+            raise ValueError('Invalid operator {}'.format(op))
+
         overlaps_1, overlaps_2 = _overlaps_for_name(name_1), _overlaps_for_name(name_2)
-        calculated = (overlaps_1 + overlaps_2 if op == '+' else overlaps_1 - overlaps_2)
+
+        if op == constants.PLUS:
+            calculated = overlaps_1 + overlaps_2
+        elif op == constants.MINUS:
+            calculated = overlaps_1 - overlaps_2
 
         # In-place l2 normalization so our query is also unit norm
         normalize([calculated], copy=False)
@@ -46,6 +53,24 @@ def initialize_subreddit_algebra(df=None, pmi_arr=None, index=None):
         # TODO: Filter distances and names so we can return distances
         names = np.array([name for name in names if name not in [name_1.lower(), name_2.lower()]])[:limit]
 
-        return names
+        return names.tolist()
 
     return subreddit_algebra
+
+
+def initialize_subreddit_names(names=None):
+    if names is None:
+        with open(constants.NAMES_FILE, 'rb') as f:
+            names = pickle.load(f)
+
+    def completions(prefix, limit=10):
+        """Returns the limit names that start with the given prefix
+
+        XXX: How are prefixes ordered?
+        """
+        # Names that start with the prefix
+        starts_with = names.keys(prefix)
+
+        return starts_with[:limit]
+
+    return completions

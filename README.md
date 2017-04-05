@@ -22,33 +22,37 @@ The [Big Query](https://bigquery.cloud.google.com) code to pull out overlapping 
 ### Building The Index
 After getting the data from BigQuery, run
 
-`pipenv run python subreddit_algebra/build_index.py <path_to_table_csv>`
+`pipenv run python app/subreddit_algebra/build_index.py <path_to_table_csv>`
 
 This will automatically run the algorithm and processing steps, and save all required data into the 'output' folder as Pickle objects.
 
-### Doing The Math
-You can actually play around with it by import `subreddit_algebra.operators`. You can get a copy of the subreddit_algebra
-function with all pickled objects initialized by running
+### Running The Server
+You can actually play around with it through the JSON API!
 
-```python
-from subreddit_algebra import initialize_subreddit_algebra
-
-calculator = initialize_subreddit_algebra()
-calculator("The_Donald", "-", "Politics")
-# Nasty hobbitses...
+```bash
+pipenv shell # shell into the virtual environment
+FLASK_APP=app/server.py flask run # start server
+# Go to localhost:5000/algebra/<subreddit_1>/<operator>/<subreddit_2> to see results
+# e.g. localhost:5000/algebra/the_donald/minus/politics (nasty hobbitses)
 ```
 
-The `initialize_subreddit_algebra` call loads the pickled `index` and some other supporting files, so make sure you've run
+Internally the server loads the pickled `index` and some other supporting files, so make sure you've run
 the `build_index.py` script as described above beforehand.
 
 
 ## Methodology
-Five Thirty Eight has some really interesting commentary at the end of [their article](https://fivethirtyeight.com/features/dissecting-trumps-most-rabid-online-following/) on their methodology.
+538 has some really interesting commentary at the end of [their article](https://fivethirtyeight.com/features/dissecting-trumps-most-rabid-online-following/) on their methodology.
 
 For convenience and personal familiarity, this ports [the R script](https://github.com/fivethirtyeight/data/blob/master/subreddit-algebra/processData.sql) used by 538 to Python. This tweaks the methodology so as to be able to more efficiently query for nearest neighbors using an index. Cosine Similarity is not a metric space. This exploits the (hopefully accurate) fact that for unit vectors, Euclidean distance is correlated with the value of Cosine Similarity.
 
 With this in mind, this normalizes all feature vectors to unit length, and builds a [Ball Tree](http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.BallTree.html#sklearn.neighbors.BallTree) index for efficient K-Nearest-Neighbors querying.
 
+## API
+`/operators` - returns a list of valid operators
+
+`/algebra/<subreddit_1>/<operator/<subreddit_2>` - return the closest five subreddits to result of adding or subtracting `subreddit_1` and `subreddit_2`
+
+`completions/<prefix>` - return first 10 subreddit names that start with `prefix`
 
 ## Roadmap
 
@@ -65,15 +69,6 @@ If a user has no results for a subreddit, leave space for a note that explains n
 Include the last time the results were updated.
 
 ### Backend
-The backend should include the folowing APIs:
-
-`subreddit_names/completions/<text_start>` - Autocompleting subreddit names - we could use the endpoint here https://www.reddit.com/dev/api#POST_api_search_reddit_names,
-but not all possible subreddits are in my database. We can extract a list from the dataset used and create our own simple endpoint that returns the top 10 results. .  There are probably 3MB of subreddit names - too many to load and cache in the browser (50K subreddits * 4 bytes per character * 15 characters) and far more than would be looked at.
-
-`operators/` - a list of operators. I can hardcode this in the response. LOW PRIORITY.
-
-`subreddit_algebra/<operator_name>/<name_one>/<name_two>` - returns the first n closest subreddits as well as the ~angle and magnitutde~ distances each result from the result of the operation.
-
 The `build_index` script should run once a month, and be automated
 * use the Big Query API and command line client to execute and store query results
   * Retreive my API key
