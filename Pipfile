@@ -2,15 +2,16 @@
 verify_ssl = true
 url = "https://pypi.python.org/simple"
 
-[dev-packages]
-ipython = "*"
-ipdb = "*"
-autoenv = "*"
-
 [packages]
 sklearn = "*"
 numpy = "*"
 scipy = "*"
 pandas = "*"
-Flask = "*"
 marisa-trie = "*"
+Flask = "*"
+Flask-Cors = "*"
+
+[dev-packages]
+ipython = "*"
+ipdb = "*"
+autoenv = "*"

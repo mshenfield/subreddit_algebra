@@ -3,10 +3,14 @@ A frontend to [538's analysis](https://fivethirtyeight.com/features/dissecting-t
 
 
 ## Installation
+
+### Backend
 Make sure you have [`pipenv`](http://docs.pipenv.org/en/latest/) installed.
 
 `pipenv install`
 
+### Frontend
+See the instructions in [the `frontend` README](./frontend/README.md) for how to run the server for the frontend application.
 
 ## Running
 
@@ -22,7 +26,7 @@ The [Big Query](https://bigquery.cloud.google.com) code to pull out overlapping 
 ### Building The Index
 After getting the data from BigQuery, run
 
-`pipenv run python app/subreddit_algebra/build_index.py <path_to_table_csv>`
+`pipenv run python api/subreddit_algebra/build_index.py <path_to_table_csv>`
 
 This will automatically run the algorithm and processing steps, and save all required data into the 'output' folder as Pickle objects.
 
@@ -31,13 +35,16 @@ You can actually play around with it through the JSON API!
 
 ```bash
 pipenv shell # shell into the virtual environment
-FLASK_APP=app/server.py flask run # start server
-# Go to localhost:5000/algebra/<subreddit_1>/<operator>/<subreddit_2> to see results
-# e.g. localhost:5000/algebra/the_donald/minus/politics (nasty hobbitses)
+FLASK_APP=api/server.py flask run # start server
+# Go to localhost:5000/api/algebra/<subreddit_1>/<operator>/<subreddit_2> to see results
+# e.g. localhost:5000/api/algebra/the_donald/minus/politics (nasty hobbitses)
 ```
 
 Internally the server loads the pickled `index` and some other supporting files, so make sure you've run
 the `build_index.py` script as described above beforehand.
+
+### Frontend
+See the instructions in [the `frontend` README](./frontend/README.md) for how to run the server for the frontend application.
 
 
 ## Methodology
@@ -52,7 +59,7 @@ With this in mind, this normalizes all feature vectors to unit length, and build
 
 `/algebra/<subreddit_1>/<operator/<subreddit_2>` - return the closest five subreddits to result of adding or subtracting `subreddit_1` and `subreddit_2`
 
-`completions/<prefix>` - return first 10 subreddit names that start with `prefix`
+`/completions/<prefix>` - return first 10 subreddit names that start with `prefix`
 
 ## Roadmap
 
@@ -68,12 +75,15 @@ If a user has no results for a subreddit, leave space for a note that explains n
 
 Include the last time the results were updated.
 
+A swap function might be nice, for the minus operator
+
 ### Backend
 The `build_index` script should run once a month, and be automated
 * use the Big Query API and command line client to execute and store query results
   * Retreive my API key
 * Add a cron
 
+TLD subreddit.plus
 
 ## License
 [MIT](LICENSE.md)

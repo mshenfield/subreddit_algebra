@@ -6,8 +6,8 @@ INDEX_FILE = '{}/{}'.format(OUTPUT_HOME, 'index.pkl')
 NAMES_FILE = '{}/{}'.format(OUTPUT_HOME, 'names.pkl')
 
 
-PLUS = 'plus'
-MINUS = 'minus'
+PLUS = '+'
+MINUS = '-'
 OPERATORS = (
     PLUS,
     MINUS,
