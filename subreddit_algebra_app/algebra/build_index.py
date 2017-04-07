@@ -2,6 +2,8 @@
 Index subreddit vectors in a Ball Tree to support efficient K-Nearest-Neighbors search.
 When called as __main__, this saves the built index into the 'search_index.pkl'.
 """
+import os
+
 import marisa_trie
 import numpy as np
 import pandas as pd
@@ -90,8 +92,12 @@ def index_subreddit_names(df):
     return names
 
 
+def data_filepath(p):
+    data_directory = os.environ.get('SUBREDDIT_ALGEBRA_DATA_DIR', 'output')
+    return '{}/{}'.format(data_directory, p)
+
+
 if __name__ == '__main__':
-    import os
     import pickle
     import sys
 
@@ -108,20 +114,27 @@ if __name__ == '__main__':
     # Index the data
     tree = index_data(df, ndarr)
     # Build a trie of the subreddit names for completions
-    names = index_subreddit_names(df)
+    names_trie = index_subreddit_names(df)
 
-    if not os.path.isdir(constants.OUTPUT_HOME):
-        os.mkdir(constants.OUTPUT_HOME)
+    # Maintain an ordered list of names and a dictionary of names to indexes so we can translate between user
+    # (names) and the model (indexes) both ways.
+    ordered_names = df.index.values.tolist()
+    names_to_indexes = {
+        name: ix
+        for ix, name in enumerate(ordered_names)
+    }
 
     # filepath, object tuples
     # Pickle all in the .gitignored output/ folder
     # TODO: Accept the folder as an argument
     to_pickle = (
-        (constants.DF_FILE, df),
         (constants.PMI_FILE, ndarr),
         (constants.INDEX_FILE, tree),
-        (constants.NAMES_FILE, names),
+        (constants.NAMES_TRIE_FILE, names_trie),
+        (constants.ORDERED_NAMES_FILE, ordered_names),
+        (constants.NAMES_TO_INDEXES_FILE, names_to_indexes),
     )
+
     for filepath, obj in to_pickle:
-        with open(filepath, 'wb') as f:
+        with open(data_filepath(filepath), 'wb') as f:
             pickle.dump(obj, f)

@@ -26,7 +26,7 @@ The [Big Query](https://bigquery.cloud.google.com) code to pull out overlapping 
 ### Building The Index
 After getting the data from BigQuery, run
 
-`pipenv run python api/subreddit_algebra/build_index.py <path_to_table_csv>`
+`pipenv run python app/subreddit_algebra/build_index.py <path_to_table_csv>`
 
 This will automatically run the algorithm and processing steps, and save all required data into the 'output' folder as Pickle objects.
 
@@ -35,7 +35,7 @@ You can actually play around with it through the JSON API!
 
 ```bash
 pipenv shell # shell into the virtual environment
-FLASK_APP=api/server.py flask run # start server
+FLASK_APP=app/server.py flask run # start server
 # Go to localhost:5000/api/algebra/<subreddit_1>/<operator>/<subreddit_2> to see results
 # e.g. localhost:5000/api/algebra/the_donald/minus/politics (nasty hobbitses)
 ```
@@ -77,13 +77,32 @@ Include the last time the results were updated.
 
 A swap function might be nice, for the minus operator
 
-### Backend
-The `build_index` script should run once a month, and be automated
-* use the Big Query API and command line client to execute and store query results
-  * Retreive my API key
-* Add a cron
+Only show the first result, with an "= r/_", with a "Show More" that fades in results below it.
 
-TLD subreddit.plus
+Link each result to the subreddit.
+
+### Backend
+* Purchase a TLD and route through Route53
+  * Purchased (for a $1!), need to route
+* Set up HTTPS
+* Add a second server
+  * Set up rolling platform updates
+  * Set up rolling deployes
+* Enable logging in AWS and log rotation
+* Set up Cloudfare or Cloudfront to deliver static assets more effectively.
+
+* Test out "requirements.txt" with just the ".". If it works, include it in the "files" section of `eb-extensions` instead of the root directory.
+* Do a clean install - verify things work from a clean install (probably won't)
+* Handling pickled indexes more effectively
+  * Include a special directory in the release ("new_data"), and add a script in .ebextensions that copies it to a central location. Read `OUTPUT_DIR` from an environment variable instead of as a constant.
+  * Cron that regenerates (using `build_index` and fresh BigQuery data) and re-deploys every month
+    * the Big Query API and command line client to execute and store query results (need my API key)
+  * I could use sparse arrays to save memory (at the cost of lookup speed)
+
+TODO:
+* Read [python packaging guide](https://packaging.python.org/distributing/)
+* Read [mod_wsgi](http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIApplicationGroup.html) documentation
+* Read [Apache documentation](https://httpd.apache.org/docs/)
 
 ## License
 [MIT](LICENSE.md)

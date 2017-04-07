@@ -97,3 +97,8 @@ ENV/
 
 # mkdocs documentation
 /site
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

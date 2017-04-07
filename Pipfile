@@ -14,4 +14,4 @@ Flask-Cors = "*"
 [dev-packages]
 ipython = "*"
 ipdb = "*"
-autoenv = "*"
+awsebcli = "*"

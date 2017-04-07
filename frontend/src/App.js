@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -13,20 +14,26 @@ class App extends Component {
   }
 
   handleSubredditLeftChange(event) {
-    this.setState({...this.state, subreddit_left: event.target.value})
+    this.setState({subreddit_left: event.target.value})
   }
 
   handleOperatorChange(event) {
-    this.setState({...this.state, operator: event.target.value})
+    this.setState({operator: event.target.value})
   }
 
   handleSubredditRightChange(event) {
-    this.setState({...this.state, subreddit_right: event.target.value})
+    this.setState({subreddit_right: event.target.value})
   }
 
   getAlgebraResult() {
     let query = `${this.state.subreddit_left}/${this.state.operator}/${this.state.subreddit_right}`
-    fetch(`http://localhost:5000/api/algebra/${query}`)
+    // Route to Flask development server if we're on the default create-react-app port
+    let isDev = window.location.port === "3000"
+    let port = isDev ? ':5000' : ''
+    // The Flask app is mounted at /api in production
+    let mount = isDev ? '' : '/api'
+
+    fetch(`http://${window.location.hostname}${port}${mount}/algebra/${query}`)
       .then((response) => {
         response.json().then((matches) => {
           this.setState({...this.state, matches: matches })
@@ -39,7 +46,9 @@ class App extends Component {
     let matches;
     if (this.state.matches) {
       matches = this.state.matches.map((match) =>
-        <li className="subreddit" key={match}>{match}</li>
+        <li className="subreddit" key={match}><a target="_blank" href={`https://reddit.com/r/${match}`}>
+          r/{match}</a>
+        </li>
       )
     } else {
       matches = null
