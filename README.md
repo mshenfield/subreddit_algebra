@@ -1,58 +1,60 @@
 # Subreddit Algebra
 A frontend to [538's analysis](https://fivethirtyeight.com/features/dissecting-trumps-most-rabid-online-following) of subreddit similarity.
 
-
-## Installation
-
-### Backend
-Make sure you have [`pipenv`](http://docs.pipenv.org/en/latest/) installed.
-
-`pipenv install`
-
-### Frontend
-See the instructions in [the `frontend` README](./frontend/README.md) for how to run the server for the frontend application.
-
-## Running
-
-### Big Query
-The [Big Query](https://bigquery.cloud.google.com) code to pull out overlapping subreddits is located in the [bigquery](bigquery) folder. You'll have to
-  * create an account
-  * create a project
-  * add a billing method to the project so you can save large tables (this won't charge you money)
-  * add a dataset to hold the data
-  * modify the query in processData.sql to use our project and dataset
-  * save the output of the second query to a table, and download it as a CSV into the output folder.
-
-### Building The Index
-After getting the data from BigQuery, run
-
-`pipenv run python app/subreddit_algebra/build_index.py <path_to_table_csv>`
-
-This will automatically run the algorithm and processing steps, and save all required data into the 'output' folder as Pickle objects.
-
-### Running The Server
-You can actually play around with it through the JSON API!
-
-```bash
-pipenv shell # shell into the virtual environment
-FLASK_APP=app/server.py flask run # start server
-# Go to localhost:5000/api/algebra/<subreddit_1>/<operator>/<subreddit_2> to see results
-# e.g. localhost:5000/api/algebra/the_donald/minus/politics (nasty hobbitses)
-```
-
-Internally the server loads the pickled `index` and some other supporting files, so make sure you've run
-the `build_index.py` script as described above beforehand.
-
-### Frontend
-See the instructions in [the `frontend` README](./frontend/README.md) for how to run the server for the frontend application.
-
-
 ## Methodology
 538 has some really interesting commentary at the end of [their article](https://fivethirtyeight.com/features/dissecting-trumps-most-rabid-online-following/) on their methodology.
 
 For convenience and personal familiarity, this ports [the R script](https://github.com/fivethirtyeight/data/blob/master/subreddit-algebra/processData.sql) used by 538 to Python. This tweaks the methodology so as to be able to more efficiently query for nearest neighbors using an index. Cosine Similarity is not a metric space. This exploits the (hopefully accurate) fact that for unit vectors, Euclidean distance is correlated with the value of Cosine Similarity.
 
 With this in mind, this normalizes all feature vectors to unit length, and builds a [Ball Tree](http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.BallTree.html#sklearn.neighbors.BallTree) index for efficient K-Nearest-Neighbors querying.
+
+## Installation
+This requires running two development servers, one for the `Flask` based API which integrates with our pickled sklearn models, and another for the `create-react-app` based frontend.
+
+### Frontend
+Make sure you have [`nodejs`](https://github.com/creationix/nvm/) installed.
+
+```bash
+cd frontend
+npm install # or yarn install
+cd frontend
+npm start # or yarn start
+# you should be automatically sent to localhost:5000 in the browser.
+```
+
+
+### Backend
+Building the models is still a manual process of executing SQL code, downloading the results, and using a python script to massage, index, and pickle the results.
+
+Make sure you have [`pipenv`](http://docs.pipenv.org/en/latest/) installed and run `pipenv install`
+
+**Query**
+
+This uses the [processData.sql](bigquery/processData.sql) BigQuery script. This requires creating a table from a query, which unfortunately requires creating an account.
+
+1. Create a "project"
+2. Add a billing method to the project so you can save large results as tables (this won't charge you money)
+3. Add a "dataset" to the project that will namespace the results (we can't save a table in the GUI without it)
+4. Modify the query in processData.sql to use the project and dataset you created in steps 1 and 3.
+5. Run both queries and save the output of the second query to a table, and export it as a CSV.
+
+**Index**
+
+With your query results on disk
+
+```bash
+mkdir output
+pipenv run python subreddit_algebra_app/algebra/build_index.py <path_to_table_csv>
+```
+
+This will automatically run the algorithm and processing steps, and save all required data into the `output`. folder at the root of the project.
+
+Now you can see it in action!
+```bash
+# When DEVELOP is set, the Flask server accepts cross origin requests from the create-react-app frontend server.
+DEVELOP=1 FLASK_APP=subreddit_algebra_app/server.py flask run
+curl http://localhost:5000/algebra/highqualitygifs/-/reactiongifs
+```
 
 ## API
 `/operators` - returns a list of valid operators
@@ -61,52 +63,49 @@ With this in mind, this normalizes all feature vectors to unit length, and build
 
 `/completions/<prefix>` - return first 10 subreddit names that start with `prefix`
 
+## Deployment
+This project is configured to deploy to AWS Elastic Beanstalk using the [eb command line tool](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html).
+
+You can use normal commands (`eb create`, `eb deploy`), but some special handling is required to push up the pickled models you've built up locally.
+
+```bash
+# This assumes you've run the steps in Installation > Backend
+mkdir new_data
+cp output/* new_data
+git add new_data
+eb deploy --staged # or eb create --staged
+```
+
+[.ebextensions](.ebextensions/00_main.config) has some special handling that detects the presence of a `new_data` folder in the deployed build, and moves the pickled files into a central location on the server where they are read by the Flask app.
+
+This avoids commiting large binary files, and pushing up data each time (which takes much longer). To cleanup, `git reset HEAD new_data && rm -r -f new_data`.
+
 ## Roadmap
 
 ### Frontend
-The frontend will allow a user to perform addition and subtraction on two subreddits. The form will be autocomplete, and appear as
-
-r/_ | | r/_ =
-
-The content will be describable via URL parameters. When all parts are filled out, it will display a visual representation of the operation (e.g. an abstraction of the co-occurence vectors being added) and closesness, similar to the article.
-It will list the top 5 closest subreddits, with emphasis on the top result.
-
-If a user has no results for a subreddit, leave space for a note that explains not all subreddits have been analyzed.
-
-Include the last time the results were updated.
-
-A swap function might be nice, for the minus operator
-
-Only show the first result, with an "= r/_", with a "Show More" that fades in results below it.
-
-Link each result to the subreddit.
+* Automplete subreddit names.
+* Notification bar on errors.
+* Form validation if subreddit is unknown, invalid operator.
+* Routing via URL parameters (means duplicating the server side functionality w/ Flask).
+* Small bite-sized graphs might make nice extra content
+* If a user has no results for a subreddit, leave space for a note that explains not all subreddits have been analyzed.
+* Include the last time the backing data was updated in the bottom right
+* A "similar to" tab, instead of operators
+* A swap function might be nice, for the minus operator
+* Only show the first result, with an "= r/_", with a "Show More" that fades in results below it.
+* Link each result to the subreddit.
 
 ### Backend
-* Purchase a TLD and route through Route53
-  * Purchased (for a $1!), need to route
 * Set up HTTPS
 * Add a second server
   * Set up rolling platform updates
-  * Set up rolling deployes
+  * Set up rolling deploys
 * Enable logging in AWS and log rotation
 * Set up Cloudfare or Cloudfront to deliver static assets more effectively.
-
-* Test out "requirements.txt" with just the ".". If it works, include it in the "files" section of `eb-extensions` instead of the root directory.
-* Do a clean install - verify things work from a clean install (probably won't)
-* Handling pickled indexes more effectively
-  * Include a special directory in the release ("new_data"), and add a script in .ebextensions that copies it to a central location. Read `OUTPUT_DIR` from an environment variable instead of as a constant.
-  * Cron that regenerates (using `build_index` and fresh BigQuery data) and re-deploys every month
-    * the Big Query API and command line client to execute and store query results (need my API key)
-  * I could use sparse arrays to save memory (at the cost of lookup speed)
-
-TODO:
-* Read [python packaging guide](https://packaging.python.org/distributing/)
-* Read [mod_wsgi](http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIApplicationGroup.html) documentation
-* Read [Apache documentation](https://httpd.apache.org/docs/)
+* Script to build index and deploy to AWS
 
 ## License
 [MIT](LICENSE.md)
-
 
 ## Contributing
 Contributions  ✍  are welcome
