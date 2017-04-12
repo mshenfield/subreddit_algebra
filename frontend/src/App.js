@@ -27,13 +27,17 @@ class App extends Component {
 
   getAlgebraResult() {
     let query = `${this.state.subreddit_left}/${this.state.operator}/${this.state.subreddit_right}`
-    // Route to Flask development server if we're on the default create-react-app port
-    let isDev = window.location.port === "3000"
-    let port = isDev ? ':5000' : ''
-    // The Flask app is mounted at /api in production
-    let mount = isDev ? '' : '/api'
 
-    fetch(`http://${window.location.hostname}${port}${mount}/algebra/${query}`)
+    let apiSubpath;
+    if (process.env.NODE_ENV === "production") {
+      // The WSGI application is mounted at /api in production
+      apiSubpath = '/api/algebra'
+    } else {
+      // But is just at the root URL on port 5000 in dev
+      apiSubpath = ':5000/algebra'
+    }
+
+    fetch(`http://${window.location.hostname}${apiSubpath}/${query}`)
       .then((response) => {
         response.json().then((matches) => {
           this.setState({...this.state, matches: matches })

@@ -51,8 +51,7 @@ This will automatically run the algorithm and processing steps, and save all req
 
 Now you can see it in action!
 ```bash
-# When DEVELOP is set, the Flask server accepts cross origin requests from the create-react-app frontend server.
-DEVELOP=1 FLASK_APP=subreddit_algebra_app/server.py flask run
+FLASK_APP=subreddit_algebra_app/server.py flask run
 curl http://localhost:5000/algebra/highqualitygifs/-/reactiongifs
 ```
 

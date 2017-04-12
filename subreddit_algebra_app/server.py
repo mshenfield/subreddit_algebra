@@ -15,7 +15,7 @@ from .algebra import (
 app = Flask(__name__)
 
 # Enable request from create-react-app in development
-if os.environ.get('DEVELOP'):
+if not os.environ.get('IS_SERVER'):
     CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 subreddit_calculator = initialize_subreddit_algebra()
