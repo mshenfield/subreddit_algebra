@@ -93,6 +93,9 @@ This avoids commiting large binary files, and pushing up data each time (which t
 * A swap function might be nice, for the minus operator
 * Only show the first result, with an "= r/_", with a "Show More" that fades in results below it.
 * Link each result to the subreddit.
+* A shimmer across the results box and then a loading bar. Notifications if it takes more than 30 seconds.
+* "Help cover the cost of running this dumb site" link with accurate (verifiable?) information on site costs and a patreon account.
+* "Join the community of people who think this dumb site is cool"
 
 ### Backend
 * Set up HTTPS
@@ -102,6 +105,8 @@ This avoids commiting large binary files, and pushing up data each time (which t
 * Enable logging in AWS and log rotation
 * Set up Cloudfare or Cloudfront to deliver static assets more effectively.
 * Script to build index and deploy to AWS
+* redirect *.subreddit-algebra.science -> subreddit-algebra.science
+* Maybe: deploy Node+Rust. Re-write server as an Express application so I can take advantage of server-side rendering.  Re-write machine learning portion in Rust for performance and adventure!
 
 ## License
 [MIT](LICENSE.md)
