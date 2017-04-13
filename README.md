@@ -82,7 +82,6 @@ This avoids commiting large binary files, and pushing up data each time (which t
 ## Roadmap
 
 ### Frontend
-* Automplete subreddit names.
 * Notification bar on errors.
 * Form validation if subreddit is unknown, invalid operator.
 * Routing via URL parameters (means duplicating the server side functionality w/ Flask).
@@ -92,11 +91,10 @@ This avoids commiting large binary files, and pushing up data each time (which t
 * A "similar to" tab, instead of operators
 * A swap function might be nice, for the minus operator
 * Only show the first result, with an "= r/_", with a "Show More" that fades in results below it.
-* Link each result to the subreddit.
 * A shimmer across the results box and then a loading bar. Notifications if it takes more than 30 seconds.
 * "Help cover the cost of running this dumb site" link with accurate (verifiable?) information on site costs and a patreon account.
 * "Join the community of people who think this dumb site is cool"
-
+* Label "r/" to link to inputs
 ### Backend
 * Set up HTTPS
 * Add a second server
