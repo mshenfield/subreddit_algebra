@@ -1,7 +1,40 @@
 .App {
+  font-size: 20px;
+  padding-top: 50px;
   text-align: center;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: white;
+  height: 100vh;
+  box-shadow: 0px 0px 10px #003c88;
+  color: #2a2a2a;
+}
+
+.SubredditInput {
+  /* Make as large as the largest subreddit name, 20 characters (Googled it) */
+  width: 13em;
+  font-size: 20px;
+  border: 1px solid #c2dffc;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.SubredditResult {
+  color: #087cf0;
+}
+.SubredditResult:visited {
+  color: #d3ced9;
 }
 
 .matches {
   list-style: none;
+}
+
+.operator {
+  font-size: 20px;
+  margin: 0em 1em;
+  width: 2em;
+  text-align: center;
+  border: 1px dotted #c2dffc;
+  color: #3196fb;
 }

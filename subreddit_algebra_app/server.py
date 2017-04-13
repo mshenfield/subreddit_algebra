@@ -28,9 +28,14 @@ def algebra(subreddit_1, operator, subreddit_2):
     return json.jsonify(matches)
 
 
+@app.route('/completions/', defaults={'prefix': None})
 @app.route('/completions/<prefix>')
 def completions(prefix):
-    return json.jsonify(subreddit_completions(prefix))
+    if prefix is None:
+        matches = []
+    else:
+        matches = subreddit_completions(prefix.lower())
+    return json.jsonify(matches)
 
 
 @app.route('/operators')
