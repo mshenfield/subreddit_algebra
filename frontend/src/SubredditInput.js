@@ -48,7 +48,7 @@ class SubredditInput extends Component {
   render () {
     return (
       <Autocomplete
-        inputProps={{className: "SubredditInput"}}
+        inputProps={this.props.inputProps}
         getItemValue={(item) => item}
         items={this.state.completions}
         onChange={this.onChange.bind(this)}
@@ -67,6 +67,10 @@ class SubredditInput extends Component {
       />
     )
   }
+}
+
+SubredditInput.defaultProps = {
+  'inputProps': {}
 }
 
 export default SubredditInput

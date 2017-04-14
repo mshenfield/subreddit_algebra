@@ -9,7 +9,7 @@ class App extends Component {
     super(props)
     this.state = {
       subredditLeft: '',
-      operator: '',
+      operator: '-',  // Default to -
       subredditRight: '',
       matches: []
     }
@@ -53,16 +53,41 @@ class App extends Component {
 
     return (
       <div className="App">
-        <span className="subreddit">r/</span>
-        <SubredditInput onChange={this.handleSubredditLeftChange.bind(this)}/>
+        <div className="row">
+          <span className="subreddit-input-widget">
+            <label htmlFor="subreddit-input-left" className="subreddit-label">
+              r/
+            </label>
+            <SubredditInput
+              inputProps={{className: "subreddit-input", id: 'subreddit-input-left'}}
+              onChange={this.handleSubredditLeftChange.bind(this)}
+            />
+          </span>
 
-        <input className="operator" type="text" placeholder="+/-" value={this.state.operator}
-          onChange={this.handleOperatorChange.bind(this)}/>
+          <select
+            id="operator"
+            value={this.state.operator}
+            onChange={this.handleOperatorChange.bind(this)}
+          >
+            <option value="+">+</option>
+            <option value="-">-</option>
+          </select>
+          <span className="subreddit-input-widget">
+            <label htmlFor="subreddit-input-right" className="subreddit-label">
+              r/
+            </label>
+            <SubredditInput
+              inputProps={{className: "subreddit-input", id: 'subreddit-input-right'}}
+              onChange={this.handleSubredditRightChange.bind(this)}
+            />
+          </span>
+        </div>
 
-        <span className="subreddit">r/</span>
-        <SubredditInput onChange={this.handleSubredditRightChange.bind(this)}/>
-
-        <button onClick={this.getAlgebraResult.bind(this)}>Send</button>
+        <div className="row">
+          <a className="button" onClick={this.getAlgebraResult.bind(this)}>
+            =
+          </a>
+        </div>
         <ul className="matches">
           {matches}
         </ul>
