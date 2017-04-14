@@ -79,33 +79,6 @@ eb deploy --staged # or eb create --staged
 
 This avoids commiting large binary files, and pushing up data each time (which takes much longer). To cleanup, `git reset HEAD new_data && rm -r -f new_data`.
 
-## Roadmap
-
-### Frontend
-* Notification bar on errors.
-* Form validation if subreddit is unknown, invalid operator.
-* Routing via URL parameters (means duplicating the server side functionality w/ Flask).
-* Small bite-sized graphs might make nice extra content
-* If a user has no results for a subreddit, leave space for a note that explains not all subreddits have been analyzed.
-* Include the last time the backing data was updated in the bottom right
-* A "similar to" tab, instead of operators
-* A swap function might be nice, for the minus operator
-* Only show the first result, with an "= r/_", with a "Show More" that fades in results below it.
-* A shimmer across the results box and then a loading bar. Notifications if it takes more than 30 seconds.
-* "Help cover the cost of running this dumb site" link with accurate (verifiable?) information on site costs and a patreon account.
-* "Join the community of people who think this dumb site is cool"
-* Label "r/" to link to inputs
-### Backend
-* Set up HTTPS
-* Add a second server
-  * Set up rolling platform updates
-  * Set up rolling deploys
-* Enable logging in AWS and log rotation
-* Set up Cloudfare or Cloudfront to deliver static assets more effectively.
-* Script to build index and deploy to AWS
-* redirect *.subreddit-algebra.science -> subreddit-algebra.science
-* Maybe: deploy Node+Rust. Re-write server as an Express application so I can take advantage of server-side rendering.  Re-write machine learning portion in Rust for performance and adventure!
-
 ## License
 [MIT](LICENSE.md)
 
