@@ -3,7 +3,7 @@
 */
 import React, {Component} from 'react';
 import Autocomplete from 'react-autocomplete';
-import {apiUrl} from './utils';
+import {apiUrl} from '../utils';
 
 /*
   Async request for completions of a subreddit name.

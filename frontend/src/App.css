@@ -9,6 +9,7 @@ input {
   font-size: 20px;
   height: 100vh;
   text-align: center;
+  padding-top: 10px;
 }
 
 .button {
@@ -33,18 +34,6 @@ input {
   -webkit-padding-start: 0px;
   padding-left: 10px;
   list-style: none;
-}
-
-.row {
-  padding: 10px;
-}
-
-.SubredditResult {
-  color: #087cf0;
-}
-
-.SubredditResult:visited {
-  color: #d3ced9;
 }
 
 .subreddit-input {

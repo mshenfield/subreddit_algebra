@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SubredditResult from './SubredditResult';
-import SubredditInput from './SubredditInput';
+import SubredditInput from './components/SubredditInput';
+import SubredditResult from './components/SubredditResult';
 import {apiUrl} from './utils';
 import './App.css';
 
@@ -53,35 +53,31 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="row">
-          <SubredditInput
-            inputProps={{className: 'subreddit-input', id: 'subreddit-input-left'}}
-            onChange={this.handleSubredditLeftChange.bind(this)}
-          />
-          <select
-            id="operator"
-            value={this.state.operator}
-            onChange={this.handleOperatorChange.bind(this)}
-          >
-            <option value="-">-</option>
-            <option value="+">+</option>
-          </select>
-          <SubredditInput
-            inputProps={{className: 'subreddit-input', id: 'subreddit-input-right'}}
-            onChange={this.handleSubredditRightChange.bind(this)}
-          />
-          <div className="row">
-            <a
-              tabIndex="0"
-              className="button"
-              onClick={this.getAlgebraResult.bind(this)}
-              // XXX: Only submit on "Enter"
-              onKeyPress={this.getAlgebraResult.bind(this)}
-            >
-              =
-            </a>
-          </div>
-        </div>
+        <SubredditInput
+          inputProps={{className: 'subreddit-input', id: 'subreddit-input-left'}}
+          onChange={this.handleSubredditLeftChange.bind(this)}
+        />
+        <select
+          id="operator"
+          value={this.state.operator}
+          onChange={this.handleOperatorChange.bind(this)}
+        >
+          <option value="-">-</option>
+          <option value="+">+</option>
+        </select>
+        <SubredditInput
+          inputProps={{className: 'subreddit-input', id: 'subreddit-input-right'}}
+          onChange={this.handleSubredditRightChange.bind(this)}
+        />
+        <a
+          tabIndex="0"
+          className="button"
+          onClick={this.getAlgebraResult.bind(this)}
+          // XXX: Only submit on "Enter"
+          onKeyPress={this.getAlgebraResult.bind(this)}
+        >
+          =
+        </a>
         <ul className="matches">
           {matches}
         </ul>
