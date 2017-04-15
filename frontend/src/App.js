@@ -15,19 +15,19 @@ class App extends Component {
     }
   }
 
-  handleSubredditLeftChange(event, value) {
+  handleSubredditLeftChange = (event, value) => {
     this.setState({subredditLeft: value})
   }
 
-  handleOperatorChange(event) {
+  handleOperatorChange = (event) => {
     this.setState({operator: event.target.value})
   }
 
-  handleSubredditRightChange(event, value) {
+  handleSubredditRightChange = (event, value) => {
     this.setState({subredditRight: value})
   }
 
-  getAlgebraResult() {
+  getAlgebraResult = () => {
     let query = `${this.state.subredditLeft}/${this.state.operator}/${this.state.subredditRight}`
 
     fetch(`${apiUrl()}/algebra/${query}`)
@@ -55,26 +55,26 @@ class App extends Component {
       <div className="App">
         <SubredditInput
           inputProps={{className: 'subreddit-input', id: 'subreddit-input-left'}}
-          onChange={this.handleSubredditLeftChange.bind(this)}
+          onChange={this.handleSubredditLeftChange}
         />
         <select
           id="operator"
           value={this.state.operator}
-          onChange={this.handleOperatorChange.bind(this)}
+          onChange={this.handleOperatorChange}
         >
           <option value="-">-</option>
           <option value="+">+</option>
         </select>
         <SubredditInput
           inputProps={{className: 'subreddit-input', id: 'subreddit-input-right'}}
-          onChange={this.handleSubredditRightChange.bind(this)}
+          onChange={this.handleSubredditRightChange}
         />
         <a
           tabIndex="0"
           className="button"
-          onClick={this.getAlgebraResult.bind(this)}
+          onClick={this.getAlgebraResult}
           // XXX: Only submit on "Enter"
-          onKeyPress={this.getAlgebraResult.bind(this)}
+          onKeyPress={this.getAlgebraResult}
         >
           =
         </a>

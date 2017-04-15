@@ -32,14 +32,14 @@ class SubredditInput extends Component {
     }
   }
 
-  setValue(value) {
+  setValue = (value) => {
     // Set state
     this.setState({ value, loading: true })
     // Callback props.onChange
     this.props.onChange(event, value)
   }
 
-  onChange(event, value) {
+  onChange = (event, value) => {
     this.setValue(value)
 
     // Request completions and set state with result
@@ -63,8 +63,8 @@ class SubredditInput extends Component {
           inputProps={this.props.inputProps}
           getItemValue={(item) => item}
           items={this.state.completions}
-          onChange={this.onChange.bind(this)}
-          onSelect={this.setValue.bind(this)}
+          onChange={this.onChange}
+          onSelect={this.setValue}
           renderItem={(item, isHighlighted) => (
             <div
               style={isHighlighted ? {backgroundColor: '#fea5dc'} : {}}
