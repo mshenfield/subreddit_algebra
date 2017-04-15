@@ -27,7 +27,7 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     keywords='reddit 538 machine-learning',
-    packages=find_packages(exclude=['frontend', 'bigquery', 'new_data']),
+    packages=find_packages(exclude=['frontend', 'bigquery']),
     install_requires=[
         'Flask',
         'Flask-Cors',

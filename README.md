@@ -65,19 +65,9 @@ curl http://localhost:5000/algebra/highqualitygifs/-/reactiongifs
 ## Deployment
 This project is configured to deploy to AWS Elastic Beanstalk using the [eb command line tool](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html).
 
-You can use normal commands (`eb create`, `eb deploy`), but some special handling is required to push up the pickled models you've built up locally.
+You'll have to customize just a little - change the `S3_DATA_BUCKET` variable in [.ebextensions/00_main.config](.ebextensions/00_main.config) to the S3 bucket associated with your ELB setup. Make sure you upload your pickled to the bucket or your app won't run.
 
-```bash
-# This assumes you've run the steps in Installation > Backend
-mkdir new_data
-cp output/* new_data
-git add new_data
-eb deploy --staged # or eb create --staged
-```
-
-[.ebextensions](.ebextensions/00_main.config) has some special handling that detects the presence of a `new_data` folder in the deployed build, and moves the pickled files into a central location on the server where they are read by the Flask app.
-
-This avoids commiting large binary files, and pushing up data each time (which takes much longer). To cleanup, `git reset HEAD new_data && rm -r -f new_data`.
+You can then just use the normal commands (`eb create`, `eb deploy`).
 
 ## License
 [MIT](LICENSE.md)
