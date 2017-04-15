@@ -3,20 +3,11 @@ input {
   padding: 5px;
 }
 
-#operator {
-  font-size: 20px;
-  margin: 0em 1em;
-  text-align: center;
-  width: 2em;
-}
-
 .App {
   background-color: white;
-  box-shadow: 0px 0px 10px #003c88;
   color: #2a2a2a;
   font-size: 20px;
   height: 100vh;
-  padding-top: 50px;
   text-align: center;
 }
 
@@ -37,11 +28,15 @@ input {
 }
 
 .matches {
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-padding-start: 0px;
+  padding-left: 10px;
   list-style: none;
 }
 
 .row {
-  padding-top: 10px;
+  padding: 10px;
 }
 
 .SubredditResult {
@@ -57,8 +52,15 @@ input {
   width: 13em;
 }
 
-@media only screen and (max-width: 650px) {
-  .subreddit-input-widget {
-    display: block;
+@media only screen and (min-width: 650px) {
+  .SubredditInput {
+    display: inline;
   }
+}
+
+#operator {
+  font-size: 20px;
+  margin: 0em 1em;
+  text-align: center;
+  width: 2em;
 }

@@ -13,7 +13,10 @@ import {apiUrl} from './utils';
 function completions(value) {
   return fetch(`${apiUrl()}/completions/${value}`)
     .then((response) => response.json())
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err)
+      return []
+    });
 }
 
 /*
@@ -46,25 +49,34 @@ class SubredditInput extends Component {
   }
 
   render () {
+    let inputId = this.props.inputProps.id || name || ''
+
     return (
-      <Autocomplete
-        inputProps={this.props.inputProps}
-        getItemValue={(item) => item}
-        items={this.state.completions}
-        onChange={this.onChange.bind(this)}
-        onSelect={this.setValue.bind(this)}
-        renderItem={(item, isHighlighted) => (
-          <div
-            className="SubredditCompletion"
-            style={isHighlighted ? {backgroundColor: '#fea5dc'} : {}}
-            key={item}
-            id={item}
-          >
-            {item}
-          </div>
-        )}
-        value={this.state.value}
-      />
+      <div className="SubredditInput">
+        <label
+          htmlFor={inputId}
+          className="subreddit-label"
+        >
+          r/
+        </label>
+        <Autocomplete
+          inputProps={this.props.inputProps}
+          getItemValue={(item) => item}
+          items={this.state.completions}
+          onChange={this.onChange.bind(this)}
+          onSelect={this.setValue.bind(this)}
+          renderItem={(item, isHighlighted) => (
+            <div
+              style={isHighlighted ? {backgroundColor: '#fea5dc'} : {}}
+              key={item}
+              id={item}
+            >
+              {item}
+            </div>
+          )}
+          value={this.state.value}
+        />
+      </div>
     )
   }
 }

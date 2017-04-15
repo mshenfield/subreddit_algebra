@@ -54,39 +54,33 @@ class App extends Component {
     return (
       <div className="App">
         <div className="row">
-          <span className="subreddit-input-widget">
-            <label htmlFor="subreddit-input-left" className="subreddit-label">
-              r/
-            </label>
-            <SubredditInput
-              inputProps={{className: "subreddit-input", id: 'subreddit-input-left'}}
-              onChange={this.handleSubredditLeftChange.bind(this)}
-            />
-          </span>
-
+          <SubredditInput
+            inputProps={{className: 'subreddit-input', id: 'subreddit-input-left'}}
+            onChange={this.handleSubredditLeftChange.bind(this)}
+          />
           <select
             id="operator"
             value={this.state.operator}
             onChange={this.handleOperatorChange.bind(this)}
           >
-            <option value="+">+</option>
             <option value="-">-</option>
+            <option value="+">+</option>
           </select>
-          <span className="subreddit-input-widget">
-            <label htmlFor="subreddit-input-right" className="subreddit-label">
-              r/
-            </label>
-            <SubredditInput
-              inputProps={{className: "subreddit-input", id: 'subreddit-input-right'}}
-              onChange={this.handleSubredditRightChange.bind(this)}
-            />
-          </span>
-        </div>
-
-        <div className="row">
-          <a className="button" onClick={this.getAlgebraResult.bind(this)}>
-            =
-          </a>
+          <SubredditInput
+            inputProps={{className: 'subreddit-input', id: 'subreddit-input-right'}}
+            onChange={this.handleSubredditRightChange.bind(this)}
+          />
+          <div className="row">
+            <a
+              tabIndex="0"
+              className="button"
+              onClick={this.getAlgebraResult.bind(this)}
+              // XXX: Only submit on "Enter"
+              onKeyPress={this.getAlgebraResult.bind(this)}
+            >
+              =
+            </a>
+          </div>
         </div>
         <ul className="matches">
           {matches}
