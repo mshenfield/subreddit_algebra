@@ -56,8 +56,6 @@ curl http://localhost:5000/algebra/highqualitygifs/-/reactiongifs
 ```
 
 ## API
-`/operators` - returns a list of valid operators
-
 `/algebra/<subreddit_1>/<operator/<subreddit_2>` - return the closest five subreddits to result of adding or subtracting `subreddit_1` and `subreddit_2`
 
 `/completions/<prefix>` - return first 10 subreddit names that start with `prefix`

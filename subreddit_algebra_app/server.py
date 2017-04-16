@@ -7,7 +7,6 @@ from flask import (
 from flask_cors import CORS
 
 from .algebra import (
-    constants,
     initialize_subreddit_algebra,
     initialize_subreddit_names,
 )
@@ -36,8 +35,3 @@ def completions(prefix):
     else:
         matches = subreddit_completions(prefix.lower())
     return json.jsonify(matches)
-
-
-@app.route('/operators')
-def operators():
-    return json.jsonify(constants.OPERATORS)
