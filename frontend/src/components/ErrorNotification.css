@@ -1,0 +1,17 @@
+.ErrorNotification {
+  animation: fadein 1s;
+  background-color: red;
+  bottom: 0;
+  color: white;
+  /* left: 0, right: 0 makes it full width */
+  left: 0;
+  padding: 2ex 2em;
+  position: fixed;
+  right: 0;
+  text-align: center;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

@@ -5,6 +5,10 @@ html, body{
   box-sizing: border-box;
 }
 
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 /*
   Utility classes that can be re-used in each component (avoids using variables)
 */

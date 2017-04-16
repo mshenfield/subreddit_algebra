@@ -24,10 +24,6 @@ const completions = (value) => {
 
   return fetch(`${apiUrl()}/completions/${trimmed}`)
     .then((response) => response.json())
-    .catch((err) => {
-      console.error(err)
-      return []
-    });
 }
 
 // Because of the way react-autocomplete adds mouseBlur handlers,
@@ -131,7 +127,14 @@ class SubredditInput extends Component {
     this.props.onChange(event, value)
 
     completions(value).then((completions) => {
-      this.setState({ completions})
+      if (completions.length) {
+        this.props.setNetworkAvailability(true)
+      }
+
+      this.setState({ completions })
+    }).catch((err) => {
+      this.setState({ completions: [] })
+      this.props.setNetworkAvailability(false)
     })
   }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ErrorNotification from './components/ErrorNotification';
 import OperatorSelector from './components/OperatorSelector';
 import SubredditInput from './components/SubredditInput';
 import SubredditResultList from './components/SubredditResultList';
@@ -9,10 +10,19 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      errorNotification: '',
       subredditLeft: '',
       operator: '-',  // Default to -
       subredditRight: '',
       matches: []
+    }
+  }
+
+  setNetworkAvailability = (isAvailable) => {
+    if (isAvailable) {
+      this.setState({'errorNotification': ''});
+    } else {
+      this.setState({'errorNotification': 'Subreddit Algebra was unable to complete a request'})
     }
   }
 
@@ -33,11 +43,12 @@ class App extends Component {
 
     fetch(`${apiUrl()}/algebra/${query}`)
       .then((response) => {
+        this.setNetworkAvailability(true)
         response.json().then((matches) => {
           this.setState({...this.state, matches: matches })
         })
       })
-      .catch((err) => { console.error(err)})
+      .catch(this.setNetworkAvailability(false))
   }
 
   render() {
@@ -49,6 +60,7 @@ class App extends Component {
             placeholder: 'a subreddit'
           }}
           onChange={this.handleSubredditLeftChange}
+          setNetworkAvailability={this.setNetworkAvailability}
           value={this.state.subredditLeft}
         />
         <OperatorSelector
@@ -61,6 +73,7 @@ class App extends Component {
             placeholder: 'another subreddit'
           }}
           onChange={this.handleSubredditRightChange}
+          setNetworkAvailability={this.setNetworkAvailability}
           value={this.state.subredditRight}
         />
         <div>
@@ -69,6 +82,7 @@ class App extends Component {
           </button>
         </div>
         <SubredditResultList subreddits={this.state.matches} />
+        <ErrorNotification message={this.state.errorNotification} />
       </div>
     );
   }
