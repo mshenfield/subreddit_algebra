@@ -4,6 +4,7 @@
   secondary-dark: #ff8717  -- lighter orange
   primary-light: #fff;  -- white
   secondary-light: #ccccca  -- light grey
+  highlight: #00eaff - baby blue
 
   text-color: #222 - dark dark grey
 
@@ -52,6 +53,15 @@ input {
   color: inherit;
 }
 
+/*
+  Highlights set text color to primary-dark, and the highlight
+  to its complement
+*/
+*::selection {
+  background-color: #00eaff;
+  color: #ff4500;
+}
+
 .App {
   background-color: white;
   color: #222;
@@ -80,6 +90,7 @@ input {
     height: 50px;
     width: 50px;
   }
+
   .SubredditInput {
     margin-top: 0px;
   }
