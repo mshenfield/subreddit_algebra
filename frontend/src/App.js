@@ -22,7 +22,7 @@ class App extends Component {
     if (isAvailable) {
       this.setState({'errorNotification': ''});
     } else {
-      this.setState({'errorNotification': 'Subreddit Algebra was unable to complete a request'})
+      this.setState({'errorNotification': 'We\'re having trouble connecting, please try again in a bit.'})
     }
   }
 
