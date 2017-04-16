@@ -4,19 +4,25 @@ import './OperatorSelector.css';
 
 const OperatorRadioOption = props => {
   const id = `OperatorSelector__radio-${props.value}`
+  const checked = props.selectorValue === props.value
+  const title = checked ? `${props.title} (selected)` : props.title
 
   return (
     <span className="OperatorRadioOption">
       <input
-        checked={props.selectorValue === props.value}
+        checked={checked}
         className="OperatorSelector__radio"
+        id={id}
         name="operator"
         onChange={props.onChange}
         type="radio"
         value={props.value}
-        id={id}
       />
-      <label htmlFor={id} className="OperatorSelector__radiolabel">
+      <label
+        className="OperatorSelector__radiolabel"
+        htmlFor={id}
+        title={title}
+      >
         {props.value}
       </label>
     </span>
@@ -29,8 +35,8 @@ const OperatorSelector = (props) => {
     <span className="OperatorSelector">
       <span className="OperatorSelector__value">{value}</span>
       <span className="OperatorSelector__options">
-        <OperatorRadioOption value="-" selectorValue={value} {...radioProps} />
-        <OperatorRadioOption value="+" selectorValue={value} {...radioProps} />
+        <OperatorRadioOption value="-" title="Subtract" selectorValue={value} {...radioProps} />
+        <OperatorRadioOption value="+" title="Add" selectorValue={value} {...radioProps} />
       </span>
     </span>
   )

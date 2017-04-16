@@ -6,6 +6,9 @@
   secondary-light: #ccccca  -- light grey
 
   text-color: #222 - dark dark grey
+
+  default padding is 10px around;
+
 */
 input {
   font-size: 20px;
@@ -25,8 +28,9 @@ button.SubredditAlgebraForm__submit {
   /* Custom styles */
   background-color: #fff;
   color: #ff8717;
-  padding: 0em 1em;
-  margin-top: 1ex;
+  display: block;
+  padding: 0ex 1em;
+  margin: 1ex 0em;
   cursor: pointer;
   outline: 1px solid #ff8717;
 
@@ -52,23 +56,35 @@ input {
   background-color: white;
   color: #222;
   font-size: 20px;
-  padding: 10px;
-  max-width: 600px;
-  margin: auto;
 }
 
 /* Stop OperatorSelector from getting cut off by block input below */
 .OperatorSelector {
-  padding: 2ex 0px;
-  padding-bottom: 4ex;
   display: block;
 }
 
-/*
-  On big screens make it inline, on small do blocks
-*/
-@media only screen and (min-width: 650px) {
+/* Utility class to share between .App and .Header */
+.Sized {
+  padding: 10px;
+  max-width: 600px;
+  margin: 0px auto;
+}
+
+.SubredditInput {
+  margin: 1ex 0em;
+}
+
+/* Shave off some pixels on smaller screens */
+@media (max-width:600px) {
+  .github-corner__svg {
+    height: 50px;
+    width: 50px;
+  }
   .SubredditInput {
-    display: inline;
+    margin-top: 0px;
+  }
+
+  .Header h2 {
+    display: none;
   }
 }

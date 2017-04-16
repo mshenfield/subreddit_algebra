@@ -1,0 +1,23 @@
+.Footer {
+  /* left: 0, right: 0 makes it full width */
+  background-color: #ff8717;
+  bottom: 0;
+  color: white;
+  font-size: 12px;
+  left: 0;
+  max-width: none;
+  position: fixed;
+  right: 0;
+}
+
+.Footer a {
+  color: white;
+}
+
+.Footer a:visited {
+  color: #ccccca;
+}
+
+.Footer__separator {
+  color: #ff4500;
+}

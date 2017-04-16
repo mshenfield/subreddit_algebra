@@ -64,19 +64,21 @@ function renderMenu(items, value, style) {
 const getSubredditInvalidError = (value) => {
     const fieldErrors = [
       `You have chosen poorly.`,
-      `Hmmmm...r/${value} isn't in our records.`,
+      // Note this is about as large as can fit on a single line
+      `Hmmm...r/${value} isn't in our records.`,
       `Never heard of r/${value}, sorry.`,
-      `r/${value} is invalid. Make sure to select a suggestion from the dropdown.`
+      `You can do better.`,
+      `*breath in* 🙏 boi 👏`
     ]
 
     // Some custom one's if people accidentally look for weird stuff
     let fieldError;
     if (value.toLowerCase().endsWith('gw') || value.toLowerCase().startsWith('nsfw')) {
-      fieldError = `Unfortunately r/${value} just doesn't exist.`
+      fieldError = `r/${value} has yet to go wild.`
     } else if (value.toLowerCase().endsWith('_irl')) {
-      fieldError = `irl there is no r/${value}.`
+      fieldError = `me_irl: there is no r/${value}.`
     } else if (value.toLowerCase().startsWith('shitty')) {
-      fieldError = `There's no shitty version of r/${value.replace('shitty', '')}.`
+      fieldError = `shittylifeprotip: try harder.`
     } else {
       fieldError = choice(fieldErrors)
     }
@@ -160,8 +162,11 @@ class SubredditInput extends Component {
     )
 
     // Override onBlur, onFocus to set and clear error messages
-    autocompleteProps.inputProps['onBlur'] = this.onBlur;
-    autocompleteProps.inputProps['onFocus'] = this.onFocus;
+    autocompleteProps.inputProps['onBlur'] = this.onBlur
+    autocompleteProps.inputProps['onFocus'] = this.onFocus
+
+    // Set maxLength to 20, the largest allowed subreddit name
+    autocompleteProps.inputProps['maxLength'] = 20
 
     return (
       <div className="SubredditInput">

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import ErrorNotification from './components/ErrorNotification';
+import Footer from './components/Footer';
+import Header from './components/Header';
 import OperatorSelector from './components/OperatorSelector';
 import SubredditInput from './components/SubredditInput';
 import SubredditResultList from './components/SubredditResultList';
+import GithubCorner from './vendors/GithubCorner';
 import {apiUrl} from './utils';
 import './App.css';
 
@@ -53,36 +56,44 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <SubredditInput
-          inputProps={{
-            id: 'subreddit-input-left',
-            placeholder: 'a subreddit'
-          }}
-          onChange={this.handleSubredditLeftChange}
-          setNetworkAvailability={this.setNetworkAvailability}
-          value={this.state.subredditLeft}
+      <div>
+        <GithubCorner
+          fillColor="#fff"
+          octocatColor="#ff4500"
+          url="https://github.com/mshenfield/subreddit_algebra"
+          targetBlank
         />
-        <OperatorSelector
-          value={this.state.operator}
-          onChange={this.handleOperatorChange}
-        />
-        <SubredditInput
-          inputProps={{
-            id: 'subreddit-input-right',
-            placeholder: 'another subreddit'
-          }}
-          onChange={this.handleSubredditRightChange}
-          setNetworkAvailability={this.setNetworkAvailability}
-          value={this.state.subredditRight}
-        />
-        <div>
+        <Header className="Sized"/>
+        <div className="App Sized">
+          <SubredditInput
+            inputProps={{
+              id: 'subreddit-input-left',
+              placeholder: 'choose a subreddit'
+            }}
+            onChange={this.handleSubredditLeftChange}
+            setNetworkAvailability={this.setNetworkAvailability}
+            value={this.state.subredditLeft}
+          />
+          <OperatorSelector
+            value={this.state.operator}
+            onChange={this.handleOperatorChange}
+          />
+          <SubredditInput
+            inputProps={{
+              id: 'subreddit-input-right',
+              placeholder: 'add or subtract a subreddit'
+            }}
+            onChange={this.handleSubredditRightChange}
+            setNetworkAvailability={this.setNetworkAvailability}
+            value={this.state.subredditRight}
+          />
           <button className="SubredditAlgebraForm__submit" onClick={this.getAlgebraResult}>
             =
           </button>
+          <SubredditResultList subreddits={this.state.matches} />
+          <Footer className="Sized"/>
+          <ErrorNotification message={this.state.errorNotification} />
         </div>
-        <SubredditResultList subreddits={this.state.matches} />
-        <ErrorNotification message={this.state.errorNotification} />
       </div>
     );
   }
