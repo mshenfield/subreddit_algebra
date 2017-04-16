@@ -48,7 +48,7 @@ class App extends Component {
           this.setState({...this.state, matches: matches })
         })
       })
-      .catch(this.setNetworkAvailability(false))
+      .catch((err) => this.setNetworkAvailability(false))
   }
 
   render() {
