@@ -1,0 +1,37 @@
+.OperatorSelector {
+    padding-left: 2em;
+}
+
+.OperatorSelector__radio {
+  opacity: 0;
+	width: 0;
+  height: 0;
+}
+
+.OperatorSelector__radiolabel {
+  cursor: pointer;
+  padding: 1ex 1em;
+  user-select: none;
+}
+
+.OperatorSelector__radio:focus ~ .OperatorSelector__radiolabel{
+  outline: 4px solid #ff8717;
+}
+
+.OperatorSelector__radio:checked ~ .OperatorSelector__radiolabel {
+  background-color: #ff4500;
+  box-shadow: inset 0px 0px 5px 2px #ff8717;
+  color: #fff;
+}
+
+.OperatorSelector__radio:not(:checked) ~ .OperatorSelector__radiolabel {
+  background-color: #fff;
+  box-shadow: -3px 0px 2px 0px #c23a08;
+  color: #ff4500;
+  outline: 1px solid #ff4500;
+}
+
+.OperatorSelector__value {
+  color: #ff8717;
+  margin-right: 2em;
+}

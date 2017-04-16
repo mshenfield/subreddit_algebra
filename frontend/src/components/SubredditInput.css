@@ -1,0 +1,20 @@
+.SubredditInput__fielderror {
+  color: red;
+  font-size: smaller;
+  min-height: 2.5ex;
+}
+
+.SubredditCompletion--highlighted {
+  background-color: #ff4500;
+  color: white;
+}
+
+.SubredditInput__input {
+  /* Make as large as the largest subreddit name, 20 characters (Googled it) */
+  width: 13em;
+}
+
+
+.SubredditInput__label {
+  color: #ccccca;
+}

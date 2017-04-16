@@ -1,0 +1,17 @@
+.SubredditResult {
+  padding: 10px 0px;
+}
+
+.SubredditResult__link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.SubredditResult__outarrow {
+  font-size: smaller;
+  color: #ff8717;
+}
+
+.SubredditResult__rSlash {
+  color: #ccccca;
+}

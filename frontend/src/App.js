@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import OperatorSelector from './components/OperatorSelector';
 import SubredditInput from './components/SubredditInput';
-import SubredditResult from './components/SubredditResult';
+import SubredditResultList from './components/SubredditResultList';
 import {apiUrl} from './utils';
 import './App.css';
 
@@ -40,47 +41,34 @@ class App extends Component {
   }
 
   render() {
-    let matches;
-    if (this.state.matches) {
-      matches = this.state.matches.map((match) =>
-        <li className="subreddit" key={match}>
-          <SubredditResult name={match}/>
-        </li>
-      )
-    } else {
-      matches = null
-    }
-
     return (
       <div className="App">
         <SubredditInput
-          inputProps={{className: 'subreddit-input', id: 'subreddit-input-left'}}
+          inputProps={{
+            id: 'subreddit-input-left',
+            placeholder: 'a subreddit'
+          }}
           onChange={this.handleSubredditLeftChange}
+          value={this.state.subredditLeft}
         />
-        <select
-          id="operator"
+        <OperatorSelector
           value={this.state.operator}
           onChange={this.handleOperatorChange}
-        >
-          <option value="-">-</option>
-          <option value="+">+</option>
-        </select>
-        <SubredditInput
-          inputProps={{className: 'subreddit-input', id: 'subreddit-input-right'}}
-          onChange={this.handleSubredditRightChange}
         />
-        <a
-          tabIndex="0"
-          className="button"
-          onClick={this.getAlgebraResult}
-          // XXX: Only submit on "Enter"
-          onKeyPress={this.getAlgebraResult}
-        >
-          =
-        </a>
-        <ul className="matches">
-          {matches}
-        </ul>
+        <SubredditInput
+          inputProps={{
+            id: 'subreddit-input-right',
+            placeholder: 'another subreddit'
+          }}
+          onChange={this.handleSubredditRightChange}
+          value={this.state.subredditRight}
+        />
+        <div>
+          <button className="SubredditAlgebraForm__submit" onClick={this.getAlgebraResult}>
+            =
+          </button>
+        </div>
+        <SubredditResultList subreddits={this.state.matches} />
       </div>
     );
   }

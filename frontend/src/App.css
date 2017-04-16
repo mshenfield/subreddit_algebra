@@ -1,55 +1,75 @@
+/*
+  Some global "variables":
+  primary-dark: #ff4500  -- orange
+  secondary-dark: #ff8717  -- lighter orange
+  primary-light: #fff;  -- white
+  secondary-light: #ccccca  -- light grey
+
+  text-color: #222 - dark dark grey
+*/
 input {
   font-size: 20px;
   padding: 5px;
 }
 
+button.SubredditAlgebraForm__submit {
+  /* Reset button styles */
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+
+  /* Custom styles */
+  background-color: #fff;
+  color: #ff8717;
+  padding: 0em 1em;
+  margin-top: 1ex;
+  cursor: pointer;
+  outline: 1px solid #ff8717;
+
+  /* Transition color and background */
+  transition-property: color, background-color;
+  transition-duration: .4s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+}
+
+button.SubredditAlgebraForm__submit:hover,
+button.SubredditAlgebraForm__submit:focus {
+  color: white;
+  background-color: #ff4500;
+}
+
+/* Override default behavior so input has same font as app */
+input {
+  color: inherit;
+}
+
 .App {
   background-color: white;
-  color: #2a2a2a;
+  color: #222;
   font-size: 20px;
   height: 100vh;
-  text-align: center;
-  padding-top: 10px;
+  padding: 10px;
+  max-width: 600px;
+  margin: auto;
 }
 
-.button {
-  background-color: #0c78d1;
-  color: white;
-  padding: 0px .5em;
-  cursor: pointer;
-  border-radius: 3px;
+/* Stop OperatorSelector from getting cut off by block input below */
+.OperatorSelector {
+  padding: 2ex 0px;
+  padding-bottom: 4ex;
+  display: block;
 }
 
-.button:hover {
-  background-color: #5295cb;
-}
-
-.button:active {
-  background-color: #005fad;
-}
-
-.matches {
-  -webkit-margin-before: 0em;
-  -webkit-margin-after: 0em;
-  -webkit-padding-start: 0px;
-  padding-left: 10px;
-  list-style: none;
-}
-
-.subreddit-input {
-  /* Make as large as the largest subreddit name, 20 characters (Googled it) */
-  width: 13em;
-}
-
+/*
+  On big screens make it inline, on small do blocks
+*/
 @media only screen and (min-width: 650px) {
   .SubredditInput {
     display: inline;
   }
-}
-
-#operator {
-  font-size: 20px;
-  margin: 0em 1em;
-  text-align: center;
-  width: 2em;
 }
