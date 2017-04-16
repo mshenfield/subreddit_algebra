@@ -13,6 +13,8 @@ export default (props) => {
         Created by <a href="https://twitter.com/MaxShenfield" className="Footer__twitterlink">@MaxShenfield</a>
         <span className="Footer__separator"> | </span>
         <a target="_blank" href="https://github.com/mshenfield/subreddit_algebra/blob/master/LICENSE.md/">MIT</a> Licensed
+        <span className="Footer__separator"> | </span>
+        <span className="Footer__lastupdated">Data Updated 2017-03-23</span>
       </div>
     </div>
   )

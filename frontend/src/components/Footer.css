@@ -18,6 +18,11 @@
   color: #ccccca;
 }
 
+.Footer__lastupdated {
+  font-size: smaller;
+  font-style: italic;
+}
+
 .Footer__separator {
   color: #ff4500;
 }
