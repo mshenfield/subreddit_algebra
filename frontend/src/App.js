@@ -5,7 +5,7 @@ import Header from './components/Header';
 import OperatorSelector from './components/OperatorSelector';
 import SubredditInput from './components/SubredditInput';
 import SubredditResultList from './components/SubredditResultList';
-import GithubCorner from './vendors/GithubCorner';
+import GithubCorner from './components/GithubCorner';
 import {apiUrl} from './utils';
 import './App.css';
 
@@ -87,7 +87,11 @@ class App extends Component {
             setNetworkAvailability={this.setNetworkAvailability}
             value={this.state.subredditRight}
           />
-          <button className="SubredditAlgebraForm__submit" onClick={this.getAlgebraResult}>
+          <button
+            className="SubredditAlgebraForm__submit"
+            onClick={this.getAlgebraResult}
+            title="Get the result"
+          >
             =
           </button>
           <SubredditResultList subreddits={this.state.matches} />
