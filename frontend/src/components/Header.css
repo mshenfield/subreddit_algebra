@@ -5,10 +5,23 @@
   text-transform: uppercase;
 }
 
+/*
+  We want these to be side by side
+*/
+.Header__logo,
+.Header__headers
+{
+  display: inline-block;
+}
+
 .Header h1 {
   font-size: 20px;
 }
 
 .Header h2 {
   font-size: 14px;
+}
+
+.Header__logo {
+  margin: 2.75ex 1.5em;
 }

@@ -91,11 +91,24 @@ input {
     width: 50px;
   }
 
-  .SubredditInput {
-    margin-top: 0px;
-  }
-
   .Header h2 {
     display: none;
+  }
+
+  .Header__logo {
+    /* Reset margin and use relative positioning instead to vertically center */
+    margin: 0px;
+    margin-right: .75em;
+    position: relative;
+    top: .7ex;
+  }
+
+  .Logo {
+    height: 32px;
+    width: 35px;
+  }
+
+  .SubredditInput {
+    margin-top: 0px;
   }
 }
