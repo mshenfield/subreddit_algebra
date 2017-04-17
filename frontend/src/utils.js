@@ -13,7 +13,7 @@ export function apiUrl() {
       // But is just at the root URL on port 5000 in dev
       apiSubpath = ':5000'
     }
-    return `http://${window.location.hostname}${apiSubpath}`;
+    return `${window.location.protocol}//${window.location.hostname}${apiSubpath}`;
 }
 
 /*
