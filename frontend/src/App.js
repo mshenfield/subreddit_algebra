@@ -54,6 +54,13 @@ class App extends Component {
       .catch((err) => this.setNetworkAvailability(false))
   }
 
+  swapSubreddits = () => {
+    const subredditLeft = this.state.subredditRight
+    const subredditRight = this.state.subredditLeft
+    this.setState({ subredditLeft })
+    this.setState({ subredditRight })
+  }
+
   render() {
     return (
       <div>
@@ -74,10 +81,20 @@ class App extends Component {
             setNetworkAvailability={this.setNetworkAvailability}
             value={this.state.subredditLeft}
           />
-          <OperatorSelector
-            value={this.state.operator}
-            onChange={this.handleOperatorChange}
-          />
+          <div className="Operators">
+            <OperatorSelector
+              value={this.state.operator}
+              onChange={this.handleOperatorChange}
+            />
+            <button
+              className="SubredditAlgebraForm__swapbutton"
+              onClick={this.swapSubreddits}
+              title="Swap subreddits"
+            >
+
+              ⇵
+            </button>
+          </div>
           <SubredditInput
             inputProps={{
               id: 'subreddit-input-right',
