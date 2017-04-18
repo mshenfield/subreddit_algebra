@@ -87,8 +87,12 @@ input {
 /* Shave off some pixels on smaller screens */
 @media (max-width:600px) {
   .github-corner__svg {
-    height: 50px;
-    width: 50px;
+    height: 41px;
+    width: 41px;
+  }
+
+  .Header h1 {
+    margin: .2em 0px;
   }
 
   .Header h2 {
@@ -100,12 +104,12 @@ input {
     margin: 0px;
     margin-right: .75em;
     position: relative;
-    top: .7ex;
+    top: 2px;
   }
 
   .Logo {
-    height: 32px;
-    width: 35px;
+    height: 24px;
+    width: 27px;
   }
 
   .Sized {
