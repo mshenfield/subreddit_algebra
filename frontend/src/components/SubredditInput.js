@@ -104,15 +104,28 @@ class SubredditInput extends Component {
     }
   }
 
+  componentWillReceiveProps(newProps) {
+    if (this.props.value === newProps.value) {
+      return
+    }
+
+    completions(newProps.value).then((completions) => {
+      if (completions.length) {
+        this.props.setNetworkAvailability(true)
+      }
+
+      this.setState({ completions })
+    }).catch((err) => {
+      this.setState({ completions: [] })
+      this.props.setNetworkAvailability(false)
+    })
+  }
+
   onBlur = (event) => {
     // XXX: Add PR to be able to listen for this
     // https://github.com/reactjs/react-autocomplete/blob/8ce87d30683c66f11546f75d8085c4542e3f5f30/lib/Autocomplete.js#L358
     // Without this, onBlur fires when we click a menu item, falsely issuing a field error
     if (this.auto._ignoreBlur) {
-      return;
-    }
-
-    if (!shouldDoCompletions(this.props.value)) {
       return
     }
 
@@ -127,17 +140,6 @@ class SubredditInput extends Component {
   // Call the passed in onChange and initiate a request for new completions
   onChange = (event, value) => {
     this.props.onChange(event, value)
-
-    completions(value).then((completions) => {
-      if (completions.length) {
-        this.props.setNetworkAvailability(true)
-      }
-
-      this.setState({ completions })
-    }).catch((err) => {
-      this.setState({ completions: [] })
-      this.props.setNetworkAvailability(false)
-    })
   }
 
   // Reset fieldError on focus

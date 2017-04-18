@@ -10,6 +10,7 @@
 
 .OperatorSelector__radiolabel {
   cursor: pointer;
+  font-weight: 800;
   padding: 1ex 1em;
   user-select: none;
 }
@@ -29,9 +30,4 @@
   box-shadow: -3px 0px 2px 0px #c23a08;
   color: #ff4500;
   outline: 1px solid #ff4500;
-}
-
-.OperatorSelector__value {
-  color: #ff8717;
-  margin-right: 2em;
 }

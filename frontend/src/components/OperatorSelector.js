@@ -33,7 +33,6 @@ const OperatorSelector = (props) => {
   const { value, ...radioProps } = props;
   return (
     <span className="OperatorSelector">
-      <span className="OperatorSelector__value">{value}</span>
       <span className="OperatorSelector__options">
         <OperatorRadioOption value="-" title="Subtract" selectorValue={value} {...radioProps} />
         <OperatorRadioOption value="+" title="Add" selectorValue={value} {...radioProps} />
