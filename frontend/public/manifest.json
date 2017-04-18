@@ -1,10 +1,15 @@
 {
-  "short_name": "Subr. Alg.",
+  "short_name": "SubR Algebra",
   "name": "Subreddit Algebra",
   "icons": [
     {
       "src":"icon-192x192.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src":"icon-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
