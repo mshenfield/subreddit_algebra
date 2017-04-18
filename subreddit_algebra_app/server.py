@@ -10,6 +10,7 @@ from .algebra import (
     initialize_subreddit_algebra,
     initialize_subreddit_names,
 )
+from .algebra.exceptions import UnknownSubredditException
 
 app = Flask(__name__)
 
@@ -23,7 +24,10 @@ subreddit_completions = initialize_subreddit_names()
 
 @app.route('/algebra/<subreddit_1>/<operator>/<subreddit_2>')
 def algebra(subreddit_1, operator, subreddit_2):
-    matches = subreddit_calculator(subreddit_1, operator, subreddit_2)
+    try:
+        matches = subreddit_calculator(subreddit_1, operator, subreddit_2)
+    except UnknownSubredditException:
+        return json.jsonify({"error": "UNKNOWN_SUBREDDIT"})
     return json.jsonify(matches)
 
 

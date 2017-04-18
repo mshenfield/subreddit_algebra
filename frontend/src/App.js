@@ -21,6 +21,24 @@ class App extends Component {
     }
   }
 
+  canSubmit() {
+    return this.state.subredditLeft && this.state.operator && this.state.subredditRight
+  }
+
+  handleSubredditLeftChange = (event, value) => {
+    this.setState({subredditLeft: value})
+  }
+
+  handleOperatorChange = (event) => {
+    this.setState({operator: event.target.value}, () => {
+      this.tryGetAlgebraResult()
+    })
+  }
+
+  handleSubredditRightChange = (event, value) => {
+    this.setState({subredditRight: value})
+  }
+
   setNetworkAvailability = (isAvailable) => {
     if (isAvailable) {
       this.setState({'errorNotification': ''});
@@ -29,36 +47,30 @@ class App extends Component {
     }
   }
 
-  handleSubredditLeftChange = (event, value) => {
-    this.setState({subredditLeft: value})
+  swapSubreddits = () => {
+    const subredditLeft = this.state.subredditRight
+    const subredditRight = this.state.subredditLeft
+    this.setState({ subredditLeft: subredditLeft, subredditRight: subredditRight })
   }
 
-  handleOperatorChange = (event) => {
-    this.setState({operator: event.target.value})
-  }
-
-  handleSubredditRightChange = (event, value) => {
-    this.setState({subredditRight: value})
-  }
-
-  getAlgebraResult = () => {
+  tryGetAlgebraResult = (left, right) => {
+    if (!this.canSubmit()) {
+      return
+    }
     let query = `${this.state.subredditLeft}/${this.state.operator}/${this.state.subredditRight}`
 
     fetch(`${apiUrl()}/algebra/${query}`)
       .then((response) => {
         this.setNetworkAvailability(true)
         response.json().then((matches) => {
+          // Fail silently for now
+          if (matches['error']) {
+            return;
+          }
           this.setState({...this.state, matches: matches })
         })
       })
       .catch((err) => this.setNetworkAvailability(false))
-  }
-
-  swapSubreddits = () => {
-    const subredditLeft = this.state.subredditRight
-    const subredditRight = this.state.subredditLeft
-    this.setState({ subredditLeft })
-    this.setState({ subredditRight })
   }
 
   render() {
@@ -75,9 +87,10 @@ class App extends Component {
           <SubredditInput
             inputProps={{
               id: 'subreddit-input-left',
-              placeholder: 'choose a subreddit'
+              placeholder: 'choose a subreddit',
             }}
             onChange={this.handleSubredditLeftChange}
+            onValidValue={this.tryGetAlgebraResult}
             setNetworkAvailability={this.setNetworkAvailability}
             value={this.state.subredditLeft}
           />
@@ -91,26 +104,20 @@ class App extends Component {
               onClick={this.swapSubreddits}
               title="Swap subreddits"
             >
-
               ⇵
             </button>
           </div>
           <SubredditInput
             inputProps={{
               id: 'subreddit-input-right',
-              placeholder: 'add or subtract a subreddit'
+              placeholder: 'add or subtract a subreddit',
             }}
             onChange={this.handleSubredditRightChange}
+            onValidValue={this.tryGetAlgebraResult}
             setNetworkAvailability={this.setNetworkAvailability}
             value={this.state.subredditRight}
           />
-          <button
-            className="SubredditAlgebraForm__submit"
-            onClick={this.getAlgebraResult}
-            title="Get the result"
-          >
-            =
-          </button>
+          <hr className="EqualsSeparator"/>
           <SubredditResultList subreddits={this.state.matches} />
           <Footer className="Sized"/>
           <ErrorNotification message={this.state.errorNotification} />

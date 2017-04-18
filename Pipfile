@@ -2,6 +2,12 @@
 verify_ssl = true
 url = "https://pypi.python.org/simple"
 
+[dev-packages]
+ipython = "*"
+ipdb = "*"
+awsebcli = "*"
+awscli = "*"
+
 [packages]
 sklearn = "*"
 numpy = "*"
@@ -10,9 +16,3 @@ pandas = "*"
 marisa-trie = "*"
 Flask = "*"
 Flask-Cors = "*"
-
-[dev-packages]
-ipython = "*"
-ipdb = "*"
-awsebcli = "*"
-awscli = "*"

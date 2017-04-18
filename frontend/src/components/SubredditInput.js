@@ -115,6 +115,9 @@ class SubredditInput extends Component {
       }
 
       this.setState({ completions })
+      if (completions.includes(newProps.value)) {
+        this.props.onValidValue(newProps.value)
+      }
     }).catch((err) => {
       this.setState({ completions: [] })
       this.props.setNetworkAvailability(false)
@@ -125,16 +128,17 @@ class SubredditInput extends Component {
     // XXX: Add PR to be able to listen for this
     // https://github.com/reactjs/react-autocomplete/blob/8ce87d30683c66f11546f75d8085c4542e3f5f30/lib/Autocomplete.js#L358
     // Without this, onBlur fires when we click a menu item, falsely issuing a field error
-    if (this.auto._ignoreBlur) {
+    if (this.auto._ignoreBlur || !this.props.value) {
       return
     }
 
     if (this.state.completions.includes(this.props.value)) {
-      return
+      return;
     }
 
     const fieldError = getSubredditInvalidError(this.props.value)
     this.setState({fieldError})
+
   }
 
   // Call the passed in onChange and initiate a request for new completions
@@ -182,8 +186,7 @@ class SubredditInput extends Component {
           getItemValue={(item) => item}
           items={this.state.completions}
           onChange={this.onChange}
-          // Just hoist change event - don't request new completions
-          onSelect={onChange}
+          onSelect={this.onChange}
           ref={this.setAutcompleteRef}
           renderItem={renderItem}
           renderMenu={renderMenu}

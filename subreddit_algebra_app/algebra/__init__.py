@@ -4,6 +4,7 @@ from sklearn.preprocessing import normalize
 # Relative import
 from . import constants
 from .build_index import data_filepath
+from .exceptions import UnknownSubredditException
 
 
 def initialize_subreddit_algebra(names_to_indexes=None, ordered_names=None, pmi_arr=None, index=None):
@@ -28,7 +29,7 @@ def initialize_subreddit_algebra(names_to_indexes=None, ordered_names=None, pmi_
         try:
             ix = names_to_indexes[name.lower()]
         except KeyError:
-            raise ValueError('Unknown subreddit name {}'.format(name))
+            raise UnknownSubredditException('Unknown subreddit name {}'.format(name))
 
         # Return the normalized values for math operations
         return pmi_arr[ix]

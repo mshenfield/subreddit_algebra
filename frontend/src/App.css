@@ -53,6 +53,13 @@ input {
   font-size: 20px;
 }
 
+.EqualsSeparator {
+  -webkit-margin-start: 0em;
+  -webkit-margin-end: 0em;
+  border: 1px solid #ff8717;
+  width: 15em;
+}
+
 /* Stop OperatorSelector from getting cut off by block input below */
 .Operators {
   display: block;
