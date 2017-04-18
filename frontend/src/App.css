@@ -108,6 +108,10 @@ input {
     width: 35px;
   }
 
+  .Sized {
+    padding: 5px 10px;
+  }
+
   .SubredditInput {
     margin-top: 0px;
   }

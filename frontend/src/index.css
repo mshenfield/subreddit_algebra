@@ -8,18 +8,3 @@ html, body{
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
-/*
-  Utility classes that can be re-used in each component (avoids using variables)
-*/
-
-/*
- Text classes
- e.g text-small, text-medium, text-large
-*/
-
-
-/*
-  Color classes
-  e.g. background-color-primary, color-primary, border-color-primary... (maybe not the best idea)
-*/
