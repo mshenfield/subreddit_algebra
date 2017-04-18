@@ -91,6 +91,11 @@ input {
     width: 41px;
   }
 
+  .Header .Sized,
+  .Footer .Sized {
+    padding: 5px 10px;
+  }
+
   .Header h1 {
     margin: .2em 0px;
   }
@@ -112,11 +117,14 @@ input {
     width: 27px;
   }
 
-  .Sized {
-    padding: 5px 10px;
-  }
-
   .SubredditInput {
     margin-top: 0px;
+  }
+
+}
+
+@media (max-height:600px) {
+  .SubredditResult {
+    font-size: 16px;
   }
 }
