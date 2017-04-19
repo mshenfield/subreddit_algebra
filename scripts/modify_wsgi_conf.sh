@@ -7,3 +7,6 @@ sed -i 's~WSGIScriptAlias /~WSGIScriptAlias /api~' $conf
 # If not in wsgi.conf, I get an error trying to accesss the "wsgi" process group.
 script="/opt/python/current/app/subreddit_algebra_app.wsgi"
 sed -i "/WSGIProcessGroup/a WSGIImportScript $script process-group=wsgi application-group=%{GLOBAL}" $conf
+
+# Temporarily replace this by hard coding
+sed -i "s~/opt/python/current/app/frontend/build/static/~/var/www/html/static/~" $conf
