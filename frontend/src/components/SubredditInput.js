@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import Autocomplete from 'react-autocomplete';
 import classNames from 'classnames';
-import {choice} from '../utils';
+import {cachedFetch, choice} from '../utils';
 
 import './SubredditInput.css';
 
@@ -22,7 +22,7 @@ const completions = (value) => {
     return Promise.resolve([])
   }
 
-  return fetch(`api/completions/${trimmed}`)
+  return cachedFetch(`api/completions/${trimmed}`)
     .then((response) => response.json())
 }
 
