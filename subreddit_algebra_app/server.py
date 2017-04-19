@@ -4,22 +4,21 @@ from flask import (
     Flask,
     json,
 )
-from flask_cors import CORS
-
 from .algebra import (
     initialize_subreddit_algebra,
     initialize_subreddit_names,
 )
 from .algebra.exceptions import UnknownSubredditException
+from .proxy import prefix_proxy
 
 app = Flask(__name__)
 
-# Enable request from create-react-app in development
-if not os.environ.get('IS_SERVER'):
-    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
-
 subreddit_calculator = initialize_subreddit_algebra()
 subreddit_completions = initialize_subreddit_names()
+
+# Imitate the production build, where the root is mounted by Apache at /api
+if not os.environ.get('IS_SERVER', False):
+    prefix_proxy(app, '/api')
 
 
 @app.route('/algebra/<subreddit_1>/<operator>/<subreddit_2>')

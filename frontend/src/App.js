@@ -6,7 +6,6 @@ import OperatorSelector from './components/OperatorSelector';
 import SubredditInput from './components/SubredditInput';
 import SubredditResultList from './components/SubredditResultList';
 import GithubCorner from './components/GithubCorner';
-import {apiUrl} from './utils';
 import './App.css';
 
 class App extends Component {
@@ -59,7 +58,7 @@ class App extends Component {
     }
     let query = `${this.state.subredditLeft}/${this.state.operator}/${this.state.subredditRight}`
 
-    fetch(`${apiUrl()}/algebra/${query}`)
+    fetch(`api/algebra/${query}`)
       .then((response) => {
         this.setNetworkAvailability(true)
         response.json().then((matches) => {

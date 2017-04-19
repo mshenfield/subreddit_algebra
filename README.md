@@ -30,13 +30,7 @@ Make sure you have [`pipenv`](http://docs.pipenv.org/en/latest/) installed and r
 
 **Query**
 
-This uses the [processData.sql](bigquery/processData.sql) BigQuery script. This requires creating a table from a query, which unfortunately requires creating an account.
-
-1. Create a "project"
-2. Add a billing method to the project so you can save large results as tables (this won't charge you money)
-3. Add a "dataset" to the project that will namespace the results (we can't save a table in the GUI without it)
-4. Modify the query in processData.sql to use the project and dataset you created in steps 1 and 3.
-5. Run both queries and save the output of the second query to a table, and export it as a CSV.
+Follow the instructions in the [bigquery README](./bigquery/README.md) to set execute and download the required file.
 
 **Index**
 
@@ -63,7 +57,14 @@ curl http://localhost:5000/algebra/highqualitygifs/-/reactiongifs
 ## Deployment
 This project is configured to deploy to AWS Elastic Beanstalk using the [eb command line tool](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html).
 
-You'll have to customize just a little - change the `S3_DATA_BUCKET` variable in [.ebextensions/00_main.config](.ebextensions/00_main.config) to the S3 bucket associated with your ELB setup. Make sure you upload your pickled to the bucket or your app won't run.
+Upload your pickled models to a bucket in S3, e.g.
+
+```bash
+aws s3 sync output/ s3://path/to/your/bucket/ # replace with your bucket
+```
+
+You'll have to customize just a little - change the `S3_DATA_BUCKET` variable in [.ebextensions/00_main.config](.ebextensions/00_main.config) to the S3 bucket associated with your ELB setup.
+
 
 You'll also want to set the REACT_APP_GA_TRACKING_CODE environment variable in your ELB production environment.
 

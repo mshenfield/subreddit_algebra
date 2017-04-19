@@ -14,7 +14,7 @@ export default (props) => {
         <span className="Footer__separator"> | </span>
         <a rel="noopener" target="_blank" href="https://github.com/mshenfield/subreddit_algebra/blob/master/LICENSE.md/">MIT</a> Licensed
         <span className="Footer__separator"> | </span>
-        <span className="Footer__lastupdated">Data Updated 2017-03-23</span>
+        <span className="Footer__lastupdated">Data Updated 2017-04-18</span>
       </div>
     </div>
   )

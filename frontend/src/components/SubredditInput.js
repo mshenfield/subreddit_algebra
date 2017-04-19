@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import Autocomplete from 'react-autocomplete';
 import classNames from 'classnames';
-import {apiUrl, choice} from '../utils';
+import {choice} from '../utils';
 
 import './SubredditInput.css';
 
@@ -22,7 +22,7 @@ const completions = (value) => {
     return Promise.resolve([])
   }
 
-  return fetch(`${apiUrl()}/completions/${trimmed}`)
+  return fetch(`api/completions/${trimmed}`)
     .then((response) => response.json())
 }
 
