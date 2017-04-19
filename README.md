@@ -54,6 +54,13 @@ curl http://localhost:5000/algebra/highqualitygifs/-/reactiongifs
 
 `/completions/<prefix>` - return first 10 subreddit names that start with `prefix`
 
+## Load Testing
+We use [`locust`](http://locust.io/). To test, go to the root of the project, and run
+
+```bash
+locust --host=example.com # replace example.com with the URL of the instance you want to test
+```
+
 ## Deployment
 This project is configured to deploy to AWS Elastic Beanstalk using the [eb command line tool](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html).
 

@@ -14,7 +14,6 @@ def prefix_proxy(app, prefix):
     def prefixed_route(*args, **kwargs):
         route = '{}{}'.format(prefix, args[0])
         args = (route,) + args[1:]
-        print(args)
         return original_route(*args, **kwargs)
 
     app.route = prefixed_route
