@@ -49,16 +49,19 @@ const renderItem = (item, isHighlighted) => {
 
 /*
 Override renderMenu to hide the menu if there are no items
-
-Uses the "function" keyword so "this.menuStyle" takes "this" from
-the context it is called from
 */
-function renderMenu(items, value, style) {
-  if (!items.length) {
-    // Default is '2px 0px'
-    this.menuStyle['padding'] = '0px 0px'
+const renderMenu = (items, value, style) => {
+  const customMenuStyle = {
+    borderRadius: '3px',
+    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+    background: '#fff', // Don't make it transparent
+    position: 'absolute',
+    overflow: 'auto',
+    minWidth: style.minWidth,
+    zIndex: '2'
   }
-  return <div style={{...style, ...this.menuStyle}} children={items}/>
+
+  return <div style={{...customMenuStyle}} children={items}/>
 }
 
 const getSubredditInvalidError = (value) => {
@@ -190,6 +193,7 @@ class SubredditInput extends Component {
           ref={this.setAutcompleteRef}
           renderItem={renderItem}
           renderMenu={renderMenu}
+          wrapperStyle={{position: 'relative', display: 'inline-block'}}
           {...autocompleteProps}
         />
         <div className="SubredditInput__fielderror">
