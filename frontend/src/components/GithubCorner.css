@@ -1,8 +1,8 @@
-.github-corner__svg {
+.GithubCorner__svg {
   height: 80px;
   width: 80px;
 }
-.github-corner:hover .octo-arm {
+.GithubCorner:hover .GithubCorner__octo-arm {
     animation: octocat-wave 560ms ease-in-out
 }
 
@@ -19,10 +19,10 @@
 }
 
 @media (max-width:500px) {
-    .github-corner:hover .octo-arm {
+    .GithubCorner:hover .GithubCorner__octo-arm {
         animation: none
     }
-    .github-corner .octo-arm {
+    .GithubCorner .GithubCorner__octo-arm {
         animation: octocat-wave 560ms ease-in-out
     }
 }

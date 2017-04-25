@@ -78,10 +78,10 @@ class App extends Component {
     return (
       <div>
         <GithubCorner
-          fillColor="#fff"
-          octocatColor="#ff4500"
+          backgroundColor="#fff"
+          color="#ff4500"
           url="https://github.com/mshenfield/subreddit_algebra"
-          targetBlank
+          target="_blank"
         />
         <Header className="Sized"/>
         <div className="App Sized">

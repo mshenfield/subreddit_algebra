@@ -114,7 +114,7 @@ input {
 
 /* Shave off some pixels on smaller screens */
 @media (max-width:600px) {
-  .github-corner__svg {
+  .GithubCorner__svg {
     height: 41px;
     width: 41px;
   }
