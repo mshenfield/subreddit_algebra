@@ -5,9 +5,10 @@ import Header from './components/Header';
 import OperatorSelector from './components/OperatorSelector';
 import SubredditInput from './components/SubredditInput';
 import SubredditResultList from './components/SubredditResultList';
-import GithubCorner from './components/GithubCorner';
+import GithubCorner from 'react-github-corners';
 import {cachedFetch} from './utils';
 
+import 'react-github-corners/dist/GithubCorner.css';
 import './App.css';
 
 class App extends Component {
