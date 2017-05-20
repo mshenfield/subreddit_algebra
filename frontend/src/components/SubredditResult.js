@@ -4,7 +4,7 @@ import './SubredditResult.css';
 
 const SubredditResult = (props) => (
   <li className="SubredditResult">
-    <a className="SubredditResult__link" target="_blank" href={`https://reddit.com/r/${props.name}`}>
+    <a className="SubredditResult__link" rel="noopener noreferrer" target="_blank" href={`https://reddit.com/r/${props.name}`}>
       <span className="SubredditResult__rSlash">
         r/
       </span>

@@ -8,11 +8,11 @@ export default (props) => {
   return (
     <div className="Footer">
       <div className={className}>
-        Based on work by <a className="Footer__fivethirtyeight" rel="noopener" target="_blank" href="https://fivethirtyeight.com/features/dissecting-trumps-most-rabid-online-following/">FiveThirtyEight</a>
+        Based on work by <a className="Footer__fivethirtyeight" rel="noopener noreferrer" target="_blank" href="https://fivethirtyeight.com/features/dissecting-trumps-most-rabid-online-following/">FiveThirtyEight</a>
         <span className="Footer__separator"> | </span>
         Created by <a href="https://twitter.com/MaxShenfield" className="Footer__twitterlink">@MaxShenfield</a>
         <span className="Footer__separator"> | </span>
-        <a rel="noopener" target="_blank" href="https://github.com/mshenfield/subreddit_algebra/blob/master/LICENSE.md/">MIT</a> Licensed
+        <a rel="noopener noreferrer" target="_blank" href="https://github.com/mshenfield/subreddit_algebra/blob/master/LICENSE.md/">MIT</a> Licensed
         <span className="Footer__separator"> | </span>
         <span className="Footer__lastupdated">Data Updated 2017-04-18</span>
       </div>

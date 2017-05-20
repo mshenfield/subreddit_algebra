@@ -9,7 +9,7 @@ export default (props) => {
 
   return(
     <div className="ErrorNotification">
-      <span className="ErrorNotification__icon">❕ </span>
+      <span role="img"  aria-label="Exclamation mark" className="ErrorNotification__icon">❕ </span>
       <span className="ErrorNotification__message">{props.message}</span>
     </div>
   )
